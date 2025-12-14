@@ -1,0 +1,41 @@
+name: AI Compliance Lint
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  ai_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Extract ticket IDs from PR title/body
+        if: github.event_name == 'pull_request'
+        id: extract
+        shell: bash
+        run: |
+          set -euo pipefail
+          TITLE="${{ github.event.pull_request.title }}"
+          BODY="${{ github.event.pull_request.body }}"
+          TEXT="$TITLE"$'\n'"$BODY"
+          # Extract TKT-####, unique, comma-separated
+          TICKETS=$(echo "$TEXT" | grep -oE 'TKT-[0-9]{4}' | sort -u | paste -sd, - || true)
+          echo "tickets=$TICKETS" >> "$GITHUB_OUTPUT"
+
+      - name: Run ID lint (format + uniqueness)
+        run: python tools/lint_ids.py
+
+      - name: Run AI compliance lint (ticket↔doc cross-check + src gating)
+        env:
+          AI_LINT_BASE_SHA: ${{ github.event.pull_request.base.sha || '' }}
+          AI_LINT_HEAD_SHA: ${{ github.event.pull_request.head.sha || '' }}
+          AI_LINT_PR_TICKETS: ${{ steps.extract.outputs.tickets || '' }}
+        run: python tools/lint_ai_compliance.py

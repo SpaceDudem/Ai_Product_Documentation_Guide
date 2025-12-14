@@ -1,0 +1,26 @@
+id: TKT-0000
+title: ""
+status: backlog
+priority: P2
+owner: ""
+doc:
+  tds_version: "v0.1.0"
+  tds_section_ids:
+    - "TDS-SW-COMPONENTS-RESPONSIBILITIES-001"
+  mpd_section_ids:
+    - "MPD-SYS-FUNCTIONAL-REQ-001"
+scope:
+  in_scope:
+    - ""
+  out_of_scope:
+    - ""
+acceptance_criteria:
+  - ""
+tests:
+  - type: unit
+    refs:
+      - "TEST-SW-EXAMPLE-PLACEHOLDER-001"
+change_control:
+  breaking_change: false
+  requires_tds_update: false
+notes: ""

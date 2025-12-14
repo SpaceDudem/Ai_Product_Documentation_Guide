@@ -1,0 +1,10 @@
+version: 0.1.0
+tools:
+  - name: filesystem
+    contract: tool-contracts/filesystem.md
+  - name: git
+    contract: tool-contracts/git.md
+  - name: build
+    contract: tool-contracts/build.md
+  - name: web
+    contract: tool-contracts/web.md

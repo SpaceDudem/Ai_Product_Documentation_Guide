@@ -1,0 +1,30 @@
+id: TKT-0001
+title: "Repository scaffolding + linting + agent prompts"
+status: backlog
+priority: P1
+owner: "unassigned"
+doc:
+  tds_version: "v0.1.0"
+  tds_section_ids:
+    - "TDS-SYS-SCOPE-REFERENCES-001"
+    - "TDS-QA-TEST-STRATEGY-001"
+  mpd_section_ids:
+    - "MPD-SYS-IDENTITY-PURPOSE-001"
+scope:
+  in_scope:
+    - "Create repo structure and CI linting"
+    - "Add agent prompts and AI compliance spec"
+  out_of_scope:
+    - "Implement product runtime code"
+acceptance_criteria:
+  - "CI fails on invalid/duplicate doc IDs"
+  - "CI fails when ticket references missing doc IDs"
+  - "CI fails when PR changes src/ without referencing a ticket in PR title/body"
+tests:
+  - type: integration
+    refs:
+      - "TEST-SYS-AI-CI-LINT-001"
+change_control:
+  breaking_change: false
+  requires_tds_update: false
+notes: "This ticket is the meta scaffolding."
